@@ -1,5 +1,5 @@
-CREATE DATABASE company;
-USE company;
+CREATE DATABASE  IT;
+USE IT;
 
 CREATE TABLE department (
     dept_id INT PRIMARY KEY,
@@ -40,7 +40,7 @@ VALUES
 
 SELECT * FROM employee;
 SELECT dept_id,count(*) from employee group by dept_id
-SELECT dept_id,avg(salary) from employee group by dept_id
+SELECT dept_id, avg(salary) from employee group by dept_id
 SELECT dept_id,min(salary) from employee group by dept_id
 select dept_id, max(age) from employee group by dept_id having  avg(age)>22  limit 2; 
 
@@ -52,4 +52,50 @@ select dept_id,age from employee order by age desc;
 select * from department inner join employee on department.dept_id = employee.dept_id;
 select * from department left join employee on department.dept_id = employee.dept_id;
 select * from department right join employee on department.dept_id = employee.dept_id;
+ UPDATE  employee set salary =90000  WHERE emp_id =1;
+select * from employee;
+-- update--  
+UPDATE employee set salary =90000-20000 where emp_id =1;
+update employee set salary = 4000+20000 where emp_id =2;
+-- transaction-- 
+UPDATE employee set salary =90000-5000 where emp_id =1;
+ commit ;
+UPDATE employee set salary = 4000+5000 where emp_id =2;
+rollback;
 
+-- aLTER
+--  ADDING
+
+ALTER TABLE employee ADD phone_number VARCHAR(10);
+SHOW TABLES;
+DESC employee;
+
+-- FOR MODIFY-- 
+
+ALTER TABLE employee  ADD  phone_number VARCHAR(10);
+-- FOR RENMAE
+ ALTER TABLE employee RENAME COLUMN phone_number TO ph_num ; 
+ 
+ SELECT *
+FROM employee
+WHERE salary = (
+    SELECT MAX(salary)
+    FROM employee
+);
+
+DELIMITER $$
+
+CREATE PROCEDURE GetAllEmployees()
+BEGIN
+    SELECT * FROM employee;
+END $$
+
+DELIMITER ;
+
+CALL GetAllEmployees();
+
+CREATE INDEX idx_emp_name
+ON employee(emp_name);
+
+SHOW INDEX FROM employee;
+ 
